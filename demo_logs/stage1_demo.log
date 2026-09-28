@@ -4,8 +4,8 @@ $ ls
 ls: вызвана без аргументов
 $ ls "my folder"
 ls: вызвана с аргументами ['my folder']
-$ ls a b
-ошибка: ls: слишком много аргументов
+$ ls -la /home "my folder"
+ls: вызвана с аргументами ['-la', '/home', 'my folder']
 $ cd "my folder"
 cd: вызвана с аргументами ['my folder']
 $ cd

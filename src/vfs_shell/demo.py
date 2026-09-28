@@ -16,7 +16,7 @@ PROMPT = "$ "
 DEMO_COMMANDS = [
     "ls",
     'ls "my folder"',
-    "ls a b",
+    'ls -la /home "my folder"',
     'cd "my folder"',
     "cd",
     "cd a b",

@@ -8,7 +8,6 @@
 
 from __future__ import annotations
 
-LS_MAX_ARGS = 1
 CD_REQUIRED_ARGS = 1
 
 
@@ -32,13 +31,11 @@ def cmd_ls(args: list[str]) -> str:
     """Stub for ``ls``: echoes its own name and arguments.
 
     Args:
-        args: At most one path argument.
+        args: Any number of options and path arguments.
 
     Returns:
         A text description of the call.
     """
-    if len(args) > LS_MAX_ARGS:
-        raise CommandError("ls: слишком много аргументов")
     return _format_stub("ls", args)
 
 

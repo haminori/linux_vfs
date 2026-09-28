@@ -18,11 +18,13 @@ def test_ls_stub_with_args():
     assert "'/home'" in result.output
 
 
-def test_ls_too_many_args_errors():
-    """ls with more than one argument is a usage error."""
-    result = Shell().execute("ls a b")
-    assert result.error is not None
-    assert "слишком много" in result.error
+def test_ls_multiple_args():
+    """ls accepts several arguments and echoes all of them."""
+    result = Shell().execute('ls -la /home "my folder"')
+    assert result.error is None
+    assert "'-la'" in result.output
+    assert "'/home'" in result.output
+    assert "'my folder'" in result.output
 
 
 def test_cd_stub_echoes_target():
