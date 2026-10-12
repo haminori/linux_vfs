@@ -1,0 +1,5 @@
+# Стартовый скрипт: обычные команды без ошибок.
+ls
+ls /home "my folder"
+cd /tmp
+cd "dir with spaces"

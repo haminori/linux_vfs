@@ -1,14 +1,13 @@
-"""Tkinter-based graphical front end for the shell-emulator prototype."""
+"""Tkinter-based graphical front end for the shell emulator."""
 
 from __future__ import annotations
 
 import tkinter as tk
 from tkinter import scrolledtext
 
-from vfs_shell.config import VFS_NAME
-from vfs_shell.shell import CommandResult, Shell
-
-PROMPT = "$ "
+from vfs_shell.config import PROMPT
+from vfs_shell.display import format_result
+from vfs_shell.shell import Shell
 
 
 class ShellWindow:
@@ -45,16 +44,9 @@ class ShellWindow:
         self.entry.delete(0, tk.END)
         self.print_line(f"{PROMPT}{line}")
         result = self.shell.execute(line)
-        self._show_result(result)
+        self.print_lines(format_result(result))
         if result.should_exit:
             self.root.quit()
-
-    def _show_result(self, result: CommandResult) -> None:
-        """Render a CommandResult into the output pane."""
-        if result.error is not None:
-            self.print_line(f"ошибка: {result.error}")
-        elif result.output:
-            self.print_line(result.output)
 
     def print_line(self, text: str) -> None:
         """Append a line of text to the output pane."""
@@ -63,14 +55,26 @@ class ShellWindow:
         self.output.configure(state="disabled")
         self.output.see(tk.END)
 
+    def print_lines(self, lines: list[str]) -> None:
+        """Append several lines of text to the output pane."""
+        for text in lines:
+            self.print_line(text)
 
-def launch_gui(shell: Shell) -> None:
+
+def launch_gui(
+    shell: Shell, title: str, startup_lines: list[str], close_now: bool
+) -> None:
     """Create the Tk root window and start the event loop.
 
     Args:
         shell: The Shell instance to drive.
+        title: Window title containing the VFS name.
+        startup_lines: Lines shown right after the window opens.
+        close_now: Whether to close the window after showing them.
     """
     root = tk.Tk()
-    title = f"VFS Shell — {VFS_NAME}"
-    ShellWindow(root, shell, title)
+    window = ShellWindow(root, shell, title)
+    window.print_lines(startup_lines)
+    if close_now:
+        root.after(0, root.quit)
     root.mainloop()
