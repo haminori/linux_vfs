@@ -1,17 +1,18 @@
 """Печатает транскрипт диалога с эмулятором без открытия GUI-окна.
 
-Используется только для документации/демонстрации (реальный дисплей
-доступен не всегда). Логика форматирования "$ команда / результат"
-идентична той, что использует ``vfs_shell.gui`` — сама программа
+Используется только для документации и демонстрации (реальный дисплей
+доступен не всегда). Принимает те же параметры, что и эмулятор, и
+выводит ровно те строки, которые показало бы окно. Сама программа
 всегда запускается как GUI-приложение через ``vfs_shell.main``.
 """
 
 from __future__ import annotations
 
-from vfs_shell.config import VFS_NAME
+from vfs_shell.cli import parse_args, window_title
+from vfs_shell.config import PROMPT
+from vfs_shell.display import format_result
 from vfs_shell.shell import Shell
-
-PROMPT = "$ "
+from vfs_shell.startup import run_startup
 
 DEMO_COMMANDS = [
     "ls",
@@ -26,19 +27,37 @@ DEMO_COMMANDS = [
 ]
 
 
-def main() -> None:
-    """Play a fixed sequence of demo commands through the shell."""
-    print(f"Заголовок окна: VFS Shell — {VFS_NAME}\n")
-    shell = Shell()
-    for line in DEMO_COMMANDS:
+def play_interactive(shell: Shell, commands: list[str]) -> None:
+    """Воспроизвести интерактивный диалог из списка команд.
+
+    Args:
+        shell: Шелл, выполняющий команды.
+        commands: Команды, как если бы их вводил пользователь.
+    """
+    for line in commands:
         print(f"{PROMPT}{line}")
         result = shell.execute(line)
-        if result.error is not None:
-            print(f"ошибка: {result.error}")
-        elif result.output:
-            print(result.output)
+        for text in format_result(result):
+            print(text)
         if result.should_exit:
             print("(окно закрывается)")
+
+
+def main(argv: list[str] | None = None) -> None:
+    """Напечатать транскрипт для заданных параметров запуска.
+
+    Args:
+        argv: Список аргументов; по умолчанию ``sys.argv[1:]``.
+    """
+    config = parse_args(argv)
+    shell = Shell()
+    startup = run_startup(shell, config)
+    print(f"Заголовок окна: {window_title(config)}")
+    print("\n".join(startup.lines))
+    if startup.should_exit:
+        print("(окно закрывается)")
+    elif config.script_path is None:
+        play_interactive(shell, DEMO_COMMANDS)
 
 
 if __name__ == "__main__":

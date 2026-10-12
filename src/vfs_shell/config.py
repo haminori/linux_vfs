@@ -1,3 +1,5 @@
 """Общие константы конфигурации, не зависящие от Tkinter."""
 
-VFS_NAME = "vfs (память)"
+PROMPT = "$ "
+DEFAULT_VFS_NAME = "vfs (память)"
+WINDOW_TITLE_PREFIX = "VFS Shell"

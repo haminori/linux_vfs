@@ -1,0 +1,137 @@
+Транскрипты этапа 2: те же строки, что показывает GUI-окно.
+
+######## python -m vfs_shell.demo 
+Заголовок окна: VFS Shell — vfs (память)
+[отладка] Параметры запуска эмулятора:
+[отладка]   --vfs         = None
+[отладка]   --script      = None
+[отладка]   имя VFS       = 'vfs (память)'
+[отладка]   заголовок окна = 'VFS Shell — vfs (память)'
+$ ls
+ls: вызвана без аргументов
+$ ls "my folder"
+ls: вызвана с аргументами ['my folder']
+$ ls -la /home "my folder"
+ls: вызвана с аргументами ['-la', '/home', 'my folder']
+$ cd "my folder"
+cd: вызвана с аргументами ['my folder']
+$ cd
+ошибка: cd: требуется ровно один аргумент
+$ cd a b
+ошибка: cd: требуется ровно один аргумент
+$ frobnicate --unknown
+ошибка: frobnicate: команда не найдена
+$ exit
+(окно закрывается)
+$ exit now
+ошибка: exit: команда не принимает аргументы
+
+######## python -m vfs_shell.demo --vfs vfs_samples/demo.csv
+Заголовок окна: VFS Shell — demo.csv
+[отладка] Параметры запуска эмулятора:
+[отладка]   --vfs         = 'vfs_samples/demo.csv'
+[отладка]   --script      = None
+[отладка]   имя VFS       = 'demo.csv'
+[отладка]   заголовок окна = 'VFS Shell — demo.csv'
+$ ls
+ls: вызвана без аргументов
+$ ls "my folder"
+ls: вызвана с аргументами ['my folder']
+$ ls -la /home "my folder"
+ls: вызвана с аргументами ['-la', '/home', 'my folder']
+$ cd "my folder"
+cd: вызвана с аргументами ['my folder']
+$ cd
+ошибка: cd: требуется ровно один аргумент
+$ cd a b
+ошибка: cd: требуется ровно один аргумент
+$ frobnicate --unknown
+ошибка: frobnicate: команда не найдена
+$ exit
+(окно закрывается)
+$ exit now
+ошибка: exit: команда не принимает аргументы
+
+######## python -m vfs_shell.demo --script scripts/emulator/stage2_basic.txt
+Заголовок окна: VFS Shell — vfs (память)
+[отладка] Параметры запуска эмулятора:
+[отладка]   --vfs         = None
+[отладка]   --script      = 'scripts/emulator/stage2_basic.txt'
+[отладка]   имя VFS       = 'vfs (память)'
+[отладка]   заголовок окна = 'VFS Shell — vfs (память)'
+$ ls
+ls: вызвана без аргументов
+$ ls /home "my folder"
+ls: вызвана с аргументами ['/home', 'my folder']
+$ cd /tmp
+cd: вызвана с аргументами ['/tmp']
+$ cd "dir with spaces"
+cd: вызвана с аргументами ['dir with spaces']
+
+######## python -m vfs_shell.demo --vfs vfs_samples/demo.csv --script scripts/emulator/stage2_comments.txt
+Заголовок окна: VFS Shell — demo.csv
+[отладка] Параметры запуска эмулятора:
+[отладка]   --vfs         = 'vfs_samples/demo.csv'
+[отладка]   --script      = 'scripts/emulator/stage2_comments.txt'
+[отладка]   имя VFS       = 'demo.csv'
+[отладка]   заголовок окна = 'VFS Shell — demo.csv'
+$ ls
+ls: вызвана без аргументов
+$ cd "a # b"
+cd: вызвана с аргументами ['a # b']
+$ ls -la /home
+ls: вызвана с аргументами ['-la', '/home']
+
+######## python -m vfs_shell.demo --vfs vfs_samples/demo.csv --script scripts/emulator/stage2_error_unknown.txt
+Заголовок окна: VFS Shell — demo.csv
+[отладка] Параметры запуска эмулятора:
+[отладка]   --vfs         = 'vfs_samples/demo.csv'
+[отладка]   --script      = 'scripts/emulator/stage2_error_unknown.txt'
+[отладка]   имя VFS       = 'demo.csv'
+[отладка]   заголовок окна = 'VFS Shell — demo.csv'
+$ ls /home
+ls: вызвана с аргументами ['/home']
+$ cd /tmp
+cd: вызвана с аргументами ['/tmp']
+$ frobnicate --unknown
+ошибка: frobnicate: команда не найдена
+ошибка в строке 4 стартового скрипта: frobnicate: команда не найдена. Выполнение скрипта остановлено.
+
+######## python -m vfs_shell.demo --script scripts/emulator/stage2_error_args.txt
+Заголовок окна: VFS Shell — vfs (память)
+[отладка] Параметры запуска эмулятора:
+[отладка]   --vfs         = None
+[отладка]   --script      = 'scripts/emulator/stage2_error_args.txt'
+[отладка]   имя VFS       = 'vfs (память)'
+[отладка]   заголовок окна = 'VFS Shell — vfs (память)'
+$ ls
+ls: вызвана без аргументов
+$ cd
+ошибка: cd: требуется ровно один аргумент
+ошибка в строке 3 стартового скрипта: cd: требуется ровно один аргумент. Выполнение скрипта остановлено.
+
+######## python -m vfs_shell.demo --script scripts/emulator/stage2_exit.txt
+Заголовок окна: VFS Shell — vfs (память)
+[отладка] Параметры запуска эмулятора:
+[отладка]   --vfs         = None
+[отладка]   --script      = 'scripts/emulator/stage2_exit.txt'
+[отладка]   имя VFS       = 'vfs (память)'
+[отладка]   заголовок окна = 'VFS Shell — vfs (память)'
+$ ls
+ls: вызвана без аргументов
+$ exit
+(окно закрывается)
+
+######## python -m vfs_shell.demo --script scripts/emulator/does_not_exist.txt
+Заголовок окна: VFS Shell — vfs (память)
+[отладка] Параметры запуска эмулятора:
+[отладка]   --vfs         = None
+[отладка]   --script      = 'scripts/emulator/does_not_exist.txt'
+[отладка]   имя VFS       = 'vfs (память)'
+[отладка]   заголовок окна = 'VFS Shell — vfs (память)'
+ошибка: не удалось открыть стартовый скрипт 'scripts/emulator/does_not_exist.txt': No such file or directory
+
+######## python -m vfs_shell.demo --unknown-option
+usage: vfs-shell [-h] [--vfs VFS_PATH] [--script SCRIPT_PATH]
+vfs-shell: error: unrecognized arguments: --unknown-option
+(код завершения: 2)
